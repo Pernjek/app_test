@@ -10,7 +10,7 @@ function Home() {
 
   useEffect(() => {
     if (userService.userValue) {
-      router.push("/highscore");
+      router.push("/game");
     } else {
       router.push("/account/login");
     }

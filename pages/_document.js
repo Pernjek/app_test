@@ -6,9 +6,7 @@ export default Document;
 function Document() {
   return (
     <Html lang="en">
-      <Head>
-        <title>Number Guessing Game</title>
-      </Head>
+      <Head></Head>
 
       <body>
         <ColorModeScript />

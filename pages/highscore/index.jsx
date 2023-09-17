@@ -1,9 +1,18 @@
-import Link from "next/link";
 import { useState, useEffect } from "react";
-
-import { Nav, Spinner } from "components";
 import { scoreService, userService } from "services";
-import { Button, useToast } from "@chakra-ui/react";
+import {
+  Flex,
+  useToast,
+  Box,
+  Table,
+  Td,
+  Tr,
+  Spinner,
+  Tbody,
+  Text,
+} from "@chakra-ui/react";
+import { PageLayout } from "components/shared/PageLayout";
+import { PageTitle } from "components/shared/PageTitle";
 
 export default Index;
 
@@ -15,82 +24,43 @@ function Index() {
     scoreService.getAll().then((x) => setScores(x));
   }, []);
 
-  function create(score) {
-    return scoreService
-      .create(score)
-      .then(() => {
-        toast({
-          title: "Success",
-          description: "Score added",
-          status: "success",
-          duration: 3000,
-          position: "top",
-          isClosable: true,
-        });
-        scoreService.getAll().then((x) => setScores(x));
-      })
-      .catch(() =>
-        toast({
-          title: "Error",
-          description: "Error creating score",
-          status: "error",
-          duration: 3000,
-          position: "top",
-          isClosable: true,
-        })
-      );
-  }
-
   return (
-    <>
-      <Nav />
-      <h1>Highscore</h1>
-      <Button
-        onClick={() =>
-          create({
-            username: userService.userValue.username,
-            score: Math.floor(Math.random() * 10000),
-          })
-        }
+    <PageLayout>
+      <PageTitle title={"Highscore"} />
+      <Box
+        px={{ base: "10%", md: "20%" }}
+        py={{ base: "customLarge", md: "2customLarge" }}
+        backgroundColor="formContainer"
+        boxShadow="0px 2px 8px 0px rgba(0,0,0,0.2)"
+        rounded="md"
       >
-        "Add score"
-      </Button>
-      {!scores && (
-        <div>
-          <Spinner />
-        </div>
-      )}
-
-      {scores && !scores.length ? (
-        <div>
-          <td colSpan="4" className="text-center">
-            <div className="p-2">No Scores To Display</div>
-          </td>
-        </div>
-      ) : (
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th style={{ width: "30%" }}>No.</th>
-              <th style={{ width: "30%" }}>Username</th>
-              <th style={{ width: "30%" }}>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {scores &&
-              scores
-                .sort((a, b) => b.score - a.score)
-                .slice(0, 30)
-                .map((score, idx) => (
-                  <tr key={score.id}>
-                    <td>{idx + 1}.</td>
-                    <td>{score.username}</td>
-                    <td>{score.score}</td>
-                  </tr>
-                ))}
-          </tbody>
-        </table>
-      )}
-    </>
+        {!scores && (
+          <Flex justifyContent={"center"} alignItems={"center"}>
+            <Spinner size="lg" />
+          </Flex>
+        )}
+        {scores && !scores.length ? (
+          <Flex justifyContent={"center"} alignItems={"center"}>
+            <Text>No scores to display</Text>
+          </Flex>
+        ) : (
+          <Table variant="simple" rounded="medium">
+            <Tbody>
+              {scores &&
+                scores
+                  .sort((a, b) => b.score - a.score)
+                  .slice(0, 10)
+                  .map((score, idx) => (
+                    <Tr key={score.id}>
+                      <Td>{idx + 1}.</Td>
+                      <Td>{score.username}</Td>
+                      <Td>{score.score}</Td>
+                    </Tr>
+                  ))}
+            </Tbody>
+          </Table>
+        )}
+      </Box>
+    </PageLayout>
   );
 }
