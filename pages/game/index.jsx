@@ -3,6 +3,7 @@ import { scoreService } from "services";
 import { PageLayout } from "components/shared/PageLayout";
 import { PageTitle } from "components/shared/PageTitle";
 import { Box } from "@chakra-ui/react";
+import { NumberInput } from "components/game/NumberInput";
 
 export default Index;
 
@@ -51,8 +52,8 @@ function Index() {
       >
         {/* <LifeDisplay />
         <ScoreDisplay />
-        <MessageDisplay />
-        <NumberInput /> */}
+        <MessageDisplay /> */}
+        <NumberInput />
       </Box>
     </PageLayout>
   );
