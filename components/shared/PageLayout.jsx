@@ -4,6 +4,7 @@ import { Container } from "./Container";
 import { Header } from "../header/Header";
 import { MotionLayout } from "./MotionLayout";
 import { userService } from "services";
+import Favicon from "./Favicon";
 
 const HEADER_HEIGHT = "90px";
 

@@ -3,11 +3,11 @@ const nextConfig = {
     reactStrictMode: true,
     serverRuntimeConfig: {
         dbConfig: {
-            host: 'localhost',
+            host: 'sql.freedb.tech',
             port: 3306,
-            user: 'root',
-            password: '12345',
-            database: 'number_guessing_game'
+            user: 'freedb_number_guessing',
+            password: '#b!?2WRs*%4fCNG',
+            database: 'freedb_number_guessing'
         },
         secret: 'app12341234app'
     },
