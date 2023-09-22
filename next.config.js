@@ -15,7 +15,7 @@ const nextConfig = {
     apiUrl:
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000/api" // development api
-        : "http://localhost:3000/api", // production api
+        : "app-test-iota.vercel.app/api", // production api
   },
 };
 
