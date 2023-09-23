@@ -14,10 +14,11 @@ async function initialize() {
   // create db if it doesn't already exist
   const { host, port, user, password, database } = serverRuntimeConfig.dbConfig;
   const connection = await mysql.createConnection({
-    host:'mysql',
-    port,
-    user,
-    password,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
   });
   await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
