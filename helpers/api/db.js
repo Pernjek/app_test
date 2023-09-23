@@ -14,7 +14,7 @@ async function initialize() {
   // create db if it doesn't already exist
   const { host, port, user, password, database } = serverRuntimeConfig.dbConfig;
   const connection = await mysql.createConnection({
-    host,
+    host: "numbers.cui4gprfreze.eu-north-1.rds.amazonaws.com",
     port,
     user,
     password,
