@@ -6,52 +6,51 @@ export const db = {
   initialize,
 };
 
-// initialize db and models, called on first api request from /helpers/api/api-handler.js
 async function initialize() {
-  // create db if it doesn't already exist
-  const connection = await mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-  });
-  await connection.query(
-    `CREATE DATABASE IF NOT EXISTS \`${process.env.DB_DATABASE}\`;`
-  );
-
-  // connect to db
-  const sequelize = new Sequelize(
-    process.env.DB_DATABASE,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
+  try {
+    const connection = await mysql.createConnection({
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      dialect: "mysql",
-    }
-  );
+    });
+    await connection.query(
+      `CREATE DATABASE IF NOT EXISTS \`${process.env.DB_DATABASE}\`;`
+    );
 
-  // init models and add them to the exported db object
-  const User = userModel(sequelize);
-  const Score = scoreModel(sequelize);
+    const sequelize = new Sequelize(
+      process.env.DB_DATABASE,
+      process.env.DB_USER,
+      process.env.DB_PASSWORD,
+      {
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        dialect: "mysql",
+        define: {
+          // Prevent sequelize from pluralizing table names
+          freezeTableName: true,
+        },
+      }
+    );
 
-  // init asscociations
-  User.hasMany(Score, {
-    foreignKey: "userId",
-  });
-  Score.belongsTo(User);
+    const User = userModel(sequelize);
+    const Score = scoreModel(sequelize);
 
-  db.User = User;
-  db.Score = Score;
+    User.hasMany(Score, {
+      foreignKey: "userId",
+    });
+    Score.belongsTo(User);
 
-  // sync all models with database
-  //await sequelize.sync({ alter: true });
+    await sequelize.sync(); // Sync all models with the database
 
-  db.initialized = true;
+    db.User = User;
+    db.Score = Score;
+
+    db.initialized = true;
+  } catch (error) {
+    console.error("Error initializing database:", error);
+    throw error; // Rethrow the error to notify the calling code about the failure
+  }
 }
 
 // sequelize models with schema definitions
