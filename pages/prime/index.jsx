@@ -8,12 +8,31 @@ import NumberDisplay from "components/game/NumberDisplay";
 import ScoreModal from "components/game/ScoreModal";
 
 const LIVES = 10;
-const NUMBER_MAX = 20;
+const NUMBER_MAX = 71;
+
+function isPrime(num) {
+  if (num <= 1) return false;
+  if (num === 2) return true;
+  if (num % 2 === 0) return false;
+  for (let i = 3; i <= Math.sqrt(num); i += 2) {
+    if (num % i === 0) return false;
+  }
+  return true;
+}
+
+function generateRandomPrime(min, max) {
+  let randomNum;
+  do {
+    randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+  } while (!isPrime(randomNum));
+  return randomNum;
+}
 
 export default function Index() {
   const modalController = useDisclosure();
+
   const [secretNumber, setSecretNumber] = useState(
-    Math.trunc(Math.random() * NUMBER_MAX) + 1
+    generateRandomPrime(1, NUMBER_MAX)
   );
 
   const [score, setScore] = useState(0);
@@ -34,6 +53,7 @@ export default function Index() {
   const displayMessage = (message) => {
     setMessage(message);
   };
+
   const checkGuess = () => {
     const guess = Number(userGuess);
 
@@ -64,16 +84,15 @@ export default function Index() {
 
   const restartGame = () => {
     setStartTime(Date.now());
-    setSecretNumber(Math.trunc(Math.random() * NUMBER_MAX) + 1);
+    setSecretNumber(generateRandomPrime(1, NUMBER_MAX));
     displayMessage("Start guessing...");
     setUserGuess("");
     setBackgroundColor("#f0f0f0");
     setLives(LIVES);
   };
+  console.log("Prime number is", secretNumber);
 
-  useEffect(() => {
-    console.log(">>>>", secretNumber);
-  }, [secretNumber]);
+  useEffect(() => {}, [secretNumber]);
 
   return (
     <>
@@ -93,7 +112,7 @@ export default function Index() {
             justifyContent={"space-between"}
           >
             <Box>
-              <Text fontWeight={"bold"}>Guess the Number!</Text>
+              <Text fontWeight={"bold"}>Guess the Prime Number!</Text>
               <Text>Between 1 and {NUMBER_MAX}</Text>
             </Box>
             <Button onClick={restartGame}>Reset!</Button>

@@ -46,7 +46,25 @@ export const Header = () => {
                 router.pathname === "/game" ? "lightgreen" : "buttonBackground"
               }
             >
-              GAME
+              CASUAL GAME
+            </Button>
+            <Button
+              onClick={() => router.push("/prime")}
+              m="small"
+              background={
+                router.pathname === "/prime" ? "lightgreen" : "buttonBackground"
+              }
+            >
+              PRIME GAME{" "}
+            </Button>
+            <Button
+              onClick={() => router.push("/fibonacci")}
+              m="small"
+              background={
+                router.pathname === "/fibonacci" ? "lightgreen" : "buttonBackground"
+              }
+            >
+              FIBONACCI GAME{" "}
             </Button>
             <Button
               onClick={() => router.push("/highscore")}

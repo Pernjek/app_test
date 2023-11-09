@@ -16,21 +16,37 @@ async function initialize() {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
   });
-  await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_DATABASE}\`;`);
+  await connection.query(
+    `CREATE DATABASE IF NOT EXISTS \`${process.env.DB_DATABASE}\`;`
+  );
 
   // connect to db
-  const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    dialect: "mysql",
-  });
+  const sequelize = new Sequelize(
+    process.env.DB_DATABASE,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      dialect: "mysql",
+    }
+  );
 
   // init models and add them to the exported db object
-  db.User = userModel(sequelize);
-  db.Score = scoreModel(sequelize);
+  const User = userModel(sequelize);
+  const Score = scoreModel(sequelize);
+
+  // init asscociations
+  User.hasMany(Score, {
+    foreignKey: "userId",
+  });
+  Score.belongsTo(User);
+
+  db.User = User;
+  db.Score = Score;
 
   // sync all models with database
   await sequelize.sync({ alter: true });
