@@ -49,7 +49,7 @@ async function initialize() {
   db.Score = Score;
 
   // sync all models with database
-  await sequelize.sync({ alter: true });
+  //await sequelize.sync({ alter: true });
 
   db.initialized = true;
 }
