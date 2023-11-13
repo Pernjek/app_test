@@ -45,7 +45,7 @@ export const Header = () => {
         {userService.userValue && (
           <Box p={4}>
             <Menu>
-              <MenuButton as={Button} colorScheme="blue" m={2}>
+              <MenuButton as={Button} colorScheme="blue">
                 SELECT GAME
               </MenuButton>
               <MenuList>
