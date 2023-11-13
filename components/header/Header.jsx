@@ -10,6 +10,9 @@ import {
   VStack,
   Text,
   Center,
+  Select,
+  WrapItem,
+  Wrap,
 } from "@chakra-ui/react";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import { userService } from "services";
@@ -36,48 +39,59 @@ export const Header = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
         px={"medium"}
+        spacing={4}
       >
         {userService.userValue && (
-          <Box>
-            <Button
-              onClick={() => router.push("/game")}
-              m="small"
-              background={
-                router.pathname === "/game" ? "lightgreen" : "buttonBackground"
-              }
-            >
-              CASUAL GAME
-            </Button>
-            <Button
-              onClick={() => router.push("/prime")}
-              m="small"
-              background={
-                router.pathname === "/prime" ? "lightgreen" : "buttonBackground"
-              }
-            >
-              PRIME GAME{" "}
-            </Button>
-            <Button
-              onClick={() => router.push("/fibonacci")}
-              m="small"
-              background={
-                router.pathname === "/fibonacci" ? "lightgreen" : "buttonBackground"
-              }
-            >
-              FIBONACCI GAME{" "}
-            </Button>
-            <Button
-              onClick={() => router.push("/highscore")}
-              m="small"
-              background={
-                router.pathname === "/highscore"
-                  ? "lightgreen"
-                  : "buttonBackground"
-              }
-            >
-              HIGHSCORE
-            </Button>
-          </Box>
+          <Wrap >
+            <WrapItem>
+              <Button
+                onClick={() => router.push("/game")}
+                background={
+                  router.pathname === "/game"
+                    ? "lightgreen"
+                    : "buttonBackground"
+                }
+              >
+                CASUAL GAME
+              </Button>
+            </WrapItem>
+            <WrapItem>
+              <Button
+                onClick={() => router.push("/prime")}
+                background={
+                  router.pathname === "/prime"
+                    ? "lightgreen"
+                    : "buttonBackground"
+                }
+              >
+                PRIME GAME{" "}
+              </Button>
+            </WrapItem>
+            <WrapItem>
+              <Button
+                onClick={() => router.push("/fibonacci")}
+                background={
+                  router.pathname === "/fibonacci"
+                    ? "lightgreen"
+                    : "buttonBackground"
+                }
+              >
+                FIBONACCI GAME{" "}
+              </Button>
+            </WrapItem>
+            <WrapItem>
+              <Button
+                onClick={() => router.push("/highscore")}
+                background={
+                  router.pathname === "/highscore"
+                    ? "lightgreen"
+                    : "buttonBackground"
+                }
+              >
+                HIGHSCORE
+              </Button>
+            </WrapItem>
+          </Wrap>
         )}
         {userService.userValue && (
           <Box>

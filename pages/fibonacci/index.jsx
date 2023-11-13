@@ -95,7 +95,7 @@ export default function Index() {
   return (
     <>
       <PageLayout>
-        <PageTitle title={"Game"} />
+        <PageTitle title={"Fibonacci Game"} />
         <Box
           px={{ base: "10%", md: "20%" }}
           py={{ base: "customLarge", md: "2customLarge" }}
