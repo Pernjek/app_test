@@ -13,6 +13,7 @@ import {
   Select,
   WrapItem,
   Wrap,
+  MenuItem,
 } from "@chakra-ui/react";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import { userService } from "services";
@@ -42,57 +43,39 @@ export const Header = () => {
         spacing={4}
       >
         {userService.userValue && (
-          <Wrap >
-            <WrapItem>
-              <Button
-                onClick={() => router.push("/game")}
-                background={
-                  router.pathname === "/game"
-                    ? "lightgreen"
-                    : "buttonBackground"
-                }
-              >
-                CASUAL GAME
-              </Button>
-            </WrapItem>
-            <WrapItem>
-              <Button
-                onClick={() => router.push("/prime")}
-                background={
-                  router.pathname === "/prime"
-                    ? "lightgreen"
-                    : "buttonBackground"
-                }
-              >
-                PRIME GAME{" "}
-              </Button>
-            </WrapItem>
-            <WrapItem>
-              <Button
-                onClick={() => router.push("/fibonacci")}
-                background={
-                  router.pathname === "/fibonacci"
-                    ? "lightgreen"
-                    : "buttonBackground"
-                }
-              >
-                FIBONACCI GAME{" "}
-              </Button>
-            </WrapItem>
-            <WrapItem>
-              <Button
-                onClick={() => router.push("/highscore")}
-                background={
-                  router.pathname === "/highscore"
-                    ? "lightgreen"
-                    : "buttonBackground"
-                }
-              >
-                HIGHSCORE
-              </Button>
-            </WrapItem>
-          </Wrap>
+          <Box p={4}>
+            <Menu>
+              <MenuButton as={Button} colorScheme="blue" m={2}>
+                SELECT GAME
+              </MenuButton>
+              <MenuList>
+                <MenuItem as="casual" onClick={() => router.push("/game")}>
+                  CASUAL GAME
+                </MenuItem>
+                <MenuItem as="prime" onClick={() => router.push("/prime")}>
+                  PRIME GAME
+                </MenuItem>
+                <MenuItem
+                  as="fibonacci"
+                  onClick={() => router.push("/fibonacci")}
+                >
+                  FIBONACCI GAME
+                </MenuItem>
+              </MenuList>
+            </Menu>
+            <Button
+              onClick={() => router.push("/highscore")}
+              background={
+                router.pathname === "/highscore"
+                  ? "lightgreen"
+                  : "buttonBackground"
+              }
+            >
+              HIGHSCORE
+            </Button>
+          </Box>
         )}
+
         {userService.userValue && (
           <Box>
             <Menu>
