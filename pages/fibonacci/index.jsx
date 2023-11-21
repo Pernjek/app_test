@@ -24,7 +24,6 @@ function generateRandomFibonacci(min, max) {
   return fibArr[randomIndex];
 }
 
-// Usage example
 
 export default function Index() {
   const modalController = useDisclosure();
@@ -95,7 +94,7 @@ export default function Index() {
   return (
     <>
       <PageLayout>
-        <PageTitle title={"Fibonacci Game"} p={4}/>
+        <PageTitle title={"Fibonacci Game"} />
         <Box
           px={{ base: "10%", md: "20%" }}
           py={{ base: "customLarge", md: "2customLarge" }}

@@ -1,10 +1,10 @@
 import { apiHandler, scoresRepo } from "helpers/api";
 
 export default apiHandler({
-  get: getAll,
+  get: getAllPrime,
 });
 
-async function getAll(req, res) {
-  const scores = await scoresRepo.getAll();
+async function getAllPrime(req, res) {
+  const scores = await scoresRepo.getAllPrime();
   return res.status(200).json(scores);
 }

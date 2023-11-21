@@ -18,7 +18,7 @@ function Register() {
 
   return (
     <PageLayout>
-      <PageTitle title={"Register"} />
+      <PageTitle title={"Register"} alignItems={"center"}/>
       <Box
         px={{ base: "10%", md: "20%" }}
         py={{ base: "customLarge", md: "2customLarge" }}

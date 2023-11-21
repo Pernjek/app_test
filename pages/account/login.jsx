@@ -18,7 +18,7 @@ function Login() {
 
   return (
     <PageLayout>
-      <PageTitle title={"Login"} />
+      <PageTitle title={"Login"} alignItems={"center"}/>
       <Box
         px={{ base: "10%", md: "20%" }}
         py={{ base: "customLarge", md: "2customLarge" }}

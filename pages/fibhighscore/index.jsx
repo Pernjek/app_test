@@ -22,12 +22,12 @@ function Index() {
   const toast = useToast();
 
   useEffect(() => {
-    scoreService.getAll().then((x) => setScores(x));
+    scoreService.getAllFib().then((x) => setScores(x));
   }, []);
 
   return (
     <PageLayout >
-      <PageTitle title={"Highscore"} />
+      <PageTitle title={"Fibonacci Highscore"} />
       <ScoreDisplay scores={scores} />
     </PageLayout>
   );

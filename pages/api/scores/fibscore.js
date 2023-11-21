@@ -1,10 +1,10 @@
 import { apiHandler, scoresRepo } from "helpers/api";
 
 export default apiHandler({
-  get: getAll,
+  get: getAllFib,
 });
 
-async function getAll(req, res) {
-  const scores = await scoresRepo.getAll();
+async function getAllFib(req, res) {
+  const scores = await scoresRepo.getAllFib();
   return res.status(200).json(scores);
 }

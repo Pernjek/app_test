@@ -49,30 +49,33 @@ export const Header = () => {
                 SELECT GAME
               </MenuButton>
               <MenuList>
-                <MenuItem as="casual" onClick={() => router.push("/game")}>
+                <MenuItem onClick={() => router.push("/game")}>
                   CASUAL GAME
                 </MenuItem>
-                <MenuItem as="prime" onClick={() => router.push("/prime")}>
+                <MenuItem onClick={() => router.push("/prime")}>
                   PRIME GAME
                 </MenuItem>
-                <MenuItem
-                  as="fibonacci"
-                  onClick={() => router.push("/fibonacci")}
-                >
+                <MenuItem onClick={() => router.push("/fibonacci")}>
                   FIBONACCI GAME
                 </MenuItem>
               </MenuList>
             </Menu>
-            <Button
-              onClick={() => router.push("/highscore")}
-              background={
-                router.pathname === "/highscore"
-                  ? "lightgreen"
-                  : "buttonBackground"
-              }
-            >
-              HIGHSCORE
-            </Button>
+            <Menu>
+              <MenuButton as={Button} colorScheme="blue">
+                HIGHSCORES
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => router.push("/highscore")}>
+                  CASUAL
+                </MenuItem>
+                <MenuItem onClick={() => router.push("/primehighscore")}>
+                  PRIME
+                </MenuItem>
+                <MenuItem onClick={() => router.push("/fibhighscore")}>
+                  FIBONACCI
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </Box>
         )}
 
