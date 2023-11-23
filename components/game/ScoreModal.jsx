@@ -19,7 +19,7 @@ const ScoreModal = ({ score, modalController }) => {
   const toast = useToast();
   const router = useRouter();
 
-  const determineGameType = () => {
+  const DetermineGameType = () => {
     const router = useRouter();
     const { pathname } = router;
 
@@ -38,7 +38,7 @@ const ScoreModal = ({ score, modalController }) => {
   };
 
   // Use the determined gameType in other parts of your code
-  const gameType = determineGameType();
+  const gameType = DetermineGameType();
 
   // Example usage
   console.log("Game type:", gameType);
