@@ -2,36 +2,18 @@ import { db } from "helpers/api";
 
 export const scoresRepo = {
   create,
-  createPrime,
-  createFib,
   getAll,
-  getAllPrime,
-  getAllFib,
 };
 
 async function getAll() {
   return await db.Score.findAll();
 }
-async function getAllPrime() {
-  return await db.PrimeScore.findAll({});
-}
-async function getAllFib() {
-  return await db.FibScore.findAll();
-}
 
-async function create(params, gameType) {
-  if (gameType === "fibonacci") {
-    return createFib(params);
-  } else if (gameType === "prime") {
-    return createPrime(params);
-  } else {
-    return createNormalScore(params);
-  }
-}
+async function create(params) {
+  const { username, score, gameType } = params;
 
-async function createNormalScore(params) {
   const user = await db.User.findOne({
-    where: { username: params.username },
+    where: { username },
   });
 
   if (!user) {
@@ -44,8 +26,9 @@ async function createNormalScore(params) {
   try {
     await db.Score.create(
       {
-        username: params.username,
-        score: params.score,
+        username,
+        score,
+        gameType,
         userId,
       },
       { transaction }
@@ -58,26 +41,4 @@ async function createNormalScore(params) {
     console.error(error);
     throw error;
   }
-}
-
-async function createPrime(params, userId, transaction) {
-  await db.PrimeScore.create(
-    {
-      username: params.username,
-      score: params.score,
-      userId,
-    },
-    { transaction }
-  );
-}
-
-async function createFib(params, userId, transaction) {
-  await db.FibScore.create(
-    {
-      username: params.username,
-      score: params.score,
-      userId,
-    },
-    { transaction }
-  );
 }

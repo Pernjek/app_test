@@ -5,6 +5,9 @@ export default apiHandler({
 });
 
 async function getAll(req, res) {
-  const scores = await scoresRepo.getAll();
-  return res.status(200).json(scores);
+  const allScores = await scoresRepo.getAll();
+  const regularScores = allScores.filter(
+    (score) => score.gameType === "regular"
+  );
+  return res.status(200).json(regularScores);
 }

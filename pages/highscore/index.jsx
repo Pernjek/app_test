@@ -22,11 +22,14 @@ function Index() {
   const toast = useToast();
 
   useEffect(() => {
-    scoreService.getAll().then((x) => setScores(x));
+    // Fetch regular game scores
+    scoreService.getAll().then((x) => {
+      setScores(x);
+    });
   }, []);
 
   return (
-    <PageLayout >
+    <PageLayout>
       <PageTitle title={"Highscore"} />
       <ScoreDisplay scores={scores} />
     </PageLayout>

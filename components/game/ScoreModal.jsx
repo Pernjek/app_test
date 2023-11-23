@@ -19,29 +19,33 @@ const ScoreModal = ({ score, modalController }) => {
   const toast = useToast();
   const router = useRouter();
 
-  const gameType = router.pathname === "/game" ? "fibonacci" : "prime";
+  const determineGameType = () => {
+    const router = useRouter();
+    const { pathname } = router;
 
-  const handleGameType = () => {
-    if (gameType === "fibonacci") {
-      createFib({
-        score,
-        username: userService.userValue?.username,
-      });
-    } else if (gameType === "prime") {
-      createPrime({
-        score,
-        username: userService.userValue?.username,
-      });
-    } else
-      createScore({
-        score,
-        username: userService.userValue?.username,
-      });
+    let gameType = "";
+
+    // Check the pathname to determine the gameType
+    if (pathname.startsWith("/game")) {
+      gameType = "regular";
+    } else if (pathname.startsWith("/prime")) {
+      gameType = "prime";
+    } else if (pathname.startsWith("/fibonacci")) {
+      gameType = "fibonacci";
+    }
+
+    return gameType;
   };
 
-  const createScore = (score) => {
+  // Use the determined gameType in other parts of your code
+  const gameType = determineGameType();
+
+  // Example usage
+  console.log("Game type:", gameType);
+
+  const createScore = (score, gameType) => {
     return scoreService
-      .create(score)
+      .create(score, gameType)
       .then(() => {
         toast({
           title: "Success",
@@ -51,64 +55,13 @@ const ScoreModal = ({ score, modalController }) => {
           position: "top",
           isClosable: true,
         });
+
         setTimeout(() => router.push("/highscore"), 1000);
       })
       .catch(() =>
         toast({
           title: "Error",
           description: "Error on score",
-          status: "error",
-          duration: 3000,
-          position: "top",
-          isClosable: true,
-        })
-      );
-  };
-
-  const createPrime = (score) => {
-    return scoreService
-      .createPrime(score)
-      .then(() => {
-        toast({
-          title: "Success",
-          description: "New prime score added",
-          status: "success",
-          duration: 3000,
-          position: "top",
-          isClosable: true,
-        });
-        setTimeout(() => router.push("/primehighscore"), 1000); // Route for PrimeScore
-      })
-      .catch(() =>
-        toast({
-          title: "Error",
-          description: "Error on prime score",
-          status: "error",
-          duration: 3000,
-          position: "top",
-          isClosable: true,
-        })
-      );
-  };
-
-  const createFib = (score) => {
-    return scoreService
-      .createFib(score)
-      .then(() => {
-        toast({
-          title: "Success",
-          description: "New Fibonacci score added",
-          status: "success",
-          duration: 3000,
-          position: "top",
-          isClosable: true,
-        });
-        setTimeout(() => router.push("/fibhighscore"), 1000); // Route for FibScore
-      })
-      .catch(() =>
-        toast({
-          title: "Error",
-          description: "Error on Fibonacci score",
           status: "error",
           duration: 3000,
           position: "top",
@@ -133,43 +86,30 @@ const ScoreModal = ({ score, modalController }) => {
         <ModalFooter>
           <Button
             colorScheme="blue"
+            w={"50%"}
+            h={"2xlarge"}
+            my={"xxlarge"}
+            px={"medium"}
+            justifyContent={"space-between"}
+            rightIcon={
+              <ArrowForwardIcon
+                h={"large"}
+                w={"large"}
+                color={"formButtonText"}
+              />
+            }
             onClick={() => {
               createScore({
                 score,
                 username: userService.userValue?.username,
+                gameType,
               });
               modalController.onClose();
             }}
           >
-            Submit Score
-          </Button>
-
-          {/* Button for submitting prime score */}
-          <Button
-            colorScheme="green"
-            onClick={() => {
-              createPrime({
-                score,
-                username: userService.userValue?.username,
-              });
-              modalController.onClose();
-            }}
-          >
-            Submit Prime Score
-          </Button>
-
-          {/* Button for submitting fibonacci score */}
-          <Button
-            colorScheme="purple"
-            onClick={() => {
-              createFib({
-                score,
-                username: userService.userValue?.username,
-              });
-              modalController.onClose();
-            }}
-          >
-            Submit Fibonacci Score
+            <Text fontSize={"medium"} color={"formButtonText"}>
+              Submit score
+            </Text>
           </Button>
         </ModalFooter>
       </ModalContent>

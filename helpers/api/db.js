@@ -38,19 +38,9 @@ async function initialize() {
 
   const User = userModel(sequelize);
   const Score = scoreModel(sequelize);
-  const PrimeScore = scorePrimeModel(sequelize);
-  const FibScore = scoreFibModel(sequelize);
 
-  const associations = [
-    { modelA: User, modelB: Score },
-    { modelA: User, modelB: PrimeScore },
-    { modelA: User, modelB: FibScore },
-  ];
-
-  associations.forEach(({ modelA, modelB }) => {
-    modelA.hasMany(modelB, { foreignKey: "userId" });
-    modelB.belongsTo(modelA, { foreignKey: "userId" });
-  });
+  User.hasMany(Score, { foreignKey: "userId" });
+  Score.belongsTo(User, { foreignKey: "userId" });
 
   console.log("Before sequelize.sync");
   await sequelize.sync({ alter: true });
@@ -59,8 +49,6 @@ async function initialize() {
 
   db.User = User;
   db.Score = Score;
-  db.PrimeScore = PrimeScore;
-  db.FibScore = FibScore;
 
   db.initialized = true;
 }
@@ -91,6 +79,7 @@ function scoreModel(sequelize) {
   const attributes = {
     username: { type: DataTypes.STRING, allowNull: false },
     score: { type: DataTypes.INTEGER, allowNull: false },
+    gameType: { type: DataTypes.STRING, allowNull: false },
     userId: { type: DataTypes.INTEGER },
   };
 
@@ -106,46 +95,4 @@ function scoreModel(sequelize) {
   };
 
   return sequelize.define("Score", attributes, options);
-}
-
-function scorePrimeModel(sequelize) {
-  const attributes = {
-    username: { type: DataTypes.STRING, allowNull: false },
-    score: { type: DataTypes.INTEGER, allowNull: false },
-    userId: { type: DataTypes.INTEGER },
-  };
-
-  const options = {
-    defaultScope: {
-      // exclude password hash by default
-      attributes: { exclude: [] },
-    },
-    scopes: {
-      // include hash with this scope
-      withHash: { attributes: {} },
-    },
-  };
-
-  return sequelize.define("PrimeScore", attributes, options);
-}
-
-function scoreFibModel(sequelize) {
-  const attributes = {
-    username: { type: DataTypes.STRING, allowNull: false },
-    score: { type: DataTypes.INTEGER, allowNull: false },
-    userId: { type: DataTypes.INTEGER },
-  };
-
-  const options = {
-    defaultScope: {
-      // exclude password hash by default
-      attributes: { exclude: [] },
-    },
-    scopes: {
-      // include hash with this scope
-      withHash: { attributes: {} },
-    },
-  };
-
-  return sequelize.define("FibScore", attributes, options);
 }
