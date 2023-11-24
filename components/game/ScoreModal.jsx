@@ -25,7 +25,6 @@ const ScoreModal = ({ score, modalController }) => {
 
     let gameType = "";
 
-    // Check the pathname to determine the gameType
     if (pathname.startsWith("/game")) {
       gameType = "regular";
     } else if (pathname.startsWith("/prime")) {
@@ -37,13 +36,11 @@ const ScoreModal = ({ score, modalController }) => {
     return gameType;
   };
 
-  // Use the determined gameType in other parts of your code
   const gameType = DetermineGameType();
 
-  // Example usage
   console.log("Game type:", gameType);
 
-  const createScore = (score, gameType) => {
+  const createScore = (score) => {
     return scoreService
       .create(score, gameType)
       .then(() => {
@@ -55,8 +52,18 @@ const ScoreModal = ({ score, modalController }) => {
           position: "top",
           isClosable: true,
         });
+        console.log("GAMETYPE===", gameType);
 
-        setTimeout(() => router.push("/highscore"), 1000);
+        setTimeout(() => {
+          console.log("GAMETYPE===", gameType);
+          if (gameType === "regular") {
+            router.push("/highscore");
+          } else if (gameType == "prime") {
+            router.push("/primehighscore");
+          } else if (gameType === "fibonacci") {
+            router.push("/fibhighscore");
+          }
+        }, 1000);
       })
       .catch(() =>
         toast({
