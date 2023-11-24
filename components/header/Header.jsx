@@ -1,7 +1,6 @@
 import {
   Box,
   Flex,
-  Stack,
   Button,
   MenuButton,
   Menu,
@@ -10,17 +9,22 @@ import {
   VStack,
   Text,
   Center,
-  Select,
-  WrapItem,
-  Wrap,
   MenuItem,
 } from "@chakra-ui/react";
+import { BellIcon, TimeIcon, StarIcon } from "@chakra-ui/icons";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import { userService } from "services";
 import { useRouter } from "next/router";
-
 export const Header = () => {
   const router = useRouter();
+  const { pathname } = router;
+  const isSelectGameActive =
+    pathname === "/game" || pathname === "/prime" || pathname === "/fibonacci";
+
+  const isHighscoreActive =
+    pathname === "/highscore" ||
+    pathname === "/primehighscore" ||
+    pathname === "/fibhighscore";
   const handleLogout = (event) => {
     userService.logout();
   };
@@ -45,8 +49,12 @@ export const Header = () => {
         {userService.userValue && (
           <Box p={4}>
             <Menu>
-              <MenuButton as={Button} colorScheme="blue">
-                SELECT GAME
+              <MenuButton
+                leftIcon={<TimeIcon />}
+                colorScheme={isSelectGameActive ? "blue" : "gray"}
+                as={Button}
+              >
+                <Text fontWeight="bold">SELECT GAME</Text>
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => router.push("/game")}>
@@ -61,8 +69,14 @@ export const Header = () => {
               </MenuList>
             </Menu>
             <Menu>
-              <MenuButton as={Button} colorScheme="blue">
-                HIGHSCORES
+              <MenuButton
+                colorScheme={isHighscoreActive ? "blue" : "gray"}
+                as={Button}
+                m={4}
+                leftIcon={<StarIcon />}
+              >
+                {" "}
+                <Text fontWeight="bold">HIGHSCORES</Text>
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => router.push("/highscore")}>
@@ -82,14 +96,9 @@ export const Header = () => {
         {userService.userValue && (
           <Box>
             <Menu>
-              <MenuButton as={Button} rounded={"full"} variant={"link"}>
-                <Center
-                  bg="avatarColor"
-                  minW="3large"
-                  minH="3large"
-                  borderRadius="full"
-                >
-                  <Text fontWeight="bold" fontSize="large" p="medium">
+              <MenuButton bg="lightgreen" as={Button} leftIcon={<BellIcon />}>
+                <Center>
+                  <Text fontWeight="bold">
                     {userService.userValue?.username}
                   </Text>
                 </Center>

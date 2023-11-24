@@ -1,16 +1,6 @@
 import { useState, useEffect } from "react";
-import { scoreService, userService } from "services";
-import {
-  Flex,
-  useToast,
-  Box,
-  Table,
-  Td,
-  Tr,
-  Spinner,
-  Tbody,
-  Text,
-} from "@chakra-ui/react";
+import { scoreService } from "services";
+import { useToast } from "@chakra-ui/react";
 import { PageLayout } from "components/shared/PageLayout";
 import { PageTitle } from "components/shared/PageTitle";
 import ScoreDisplay from "components/game/ScoreDisplay";
@@ -26,7 +16,7 @@ function Index() {
   }, []);
 
   return (
-    <PageLayout >
+    <PageLayout>
       <PageTitle title={"Prime Highscore"} />
       <ScoreDisplay scores={scores} />
     </PageLayout>
