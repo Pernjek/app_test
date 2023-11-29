@@ -1,4 +1,4 @@
-# aplikacija: Number guessing game   LIVE AT : https://app-test-ethfpu8tg-pernjek1.vercel.app
+# aplikacija: Number Guessing Game        PLAY : https://app-test-ethfpu8tg-pernjek1.vercel.app
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
